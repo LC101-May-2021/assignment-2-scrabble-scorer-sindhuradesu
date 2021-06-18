@@ -101,7 +101,9 @@ function transform(oldstructure) {
   const swapVal={};
   for(let score in oldstructure){
     let val=oldstructure[score];
+    //console.log(val);
     for(let i=0;i<val.length;i++){
+      val[i].toLowerCase();
       swapVal[val[i]]=Number(score);
     }
   }
