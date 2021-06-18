@@ -58,7 +58,7 @@ let vowelBonusScore=function(word){
 //console.log(vowelBonusScore("sindhu"));
 
 let scrabbleScore=function(word){
-  word = word.toUpperCase();
+ // word = word.toUpperCase();
 	let letterPoints =0;
  
 	for (let i = 0; i < word.length; i++) {
@@ -103,18 +103,19 @@ function transform(oldstructure) {
     let val=oldstructure[score];
     //console.log(val);
     for(let i=0;i<val.length;i++){
-      val[i].toLowerCase();
-      swapVal[val[i]]=Number(score);
+      val1=val[i].toLowerCase();
+      console.log(val1);
+      swapVal[val1]=Number(score);
     }
   }
   return swapVal;
 };
-console.log(transform(oldPointStructure));
+//console.log(transform(oldPointStructure));
 
 let newPointStructure;
 newPointStructure=transform(oldPointStructure);
 //console.log(scrabbleScore('Sindhu'));
-
+console.log(newPointStructure);
 function runProgram() {
    let word=initialPrompt();
    let selectedScore=scorerPrompt();
