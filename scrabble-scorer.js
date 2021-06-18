@@ -33,26 +33,96 @@ function oldScrabbleScorer(word) {
 // don't change the names or your program won't work as expected. //
 
 function initialPrompt() {
-   console.log("Let's play some scrabble! Enter a word:");
+   let word1=input.question("Let's play some scrabble! Enter a word:");
+   //console.log(oldScrabbleScorer(word1));
+   return word1;
 };
 
-let simpleScore;
+let simpleScore=function(word){
+  return word.length;
+}
+let vowelBonusScore=function(word){
+  let letterPoints=0;
+  let str='aeiou';
+  for(i=0;i<word.length;i++)
+  {
+    if (str.includes(word[i].toLowerCase())){
+      letterPoints=letterPoints+3;
+    } else{
+          letterPoints=letterPoints+1;
+    }
+  }
+  return letterPoints;
+}
 
-let vowelBonusScore;
+//console.log(vowelBonusScore("sindhu"));
 
-let scrabbleScore;
+let scrabbleScore=function(word){
+ // word = word.toUpperCase();
+	let letterPoints =0;
+ 
+	for (let i = 0; i < word.length; i++) {
+			letterPoints +=newPointStructure[word[i]];
+	}
+	return letterPoints;
+ }
 
-const scoringAlgorithms = [];
+const scoringAlgorithms = [
+  {
+    name:'Simple Score',
+    description:'Each letter is one Point',
+    scoringFunction:simpleScore
 
-function scorerPrompt() {}
+  },
+  {
+    name:'Bonus Vowels',
+    description:'for vowels 3 points,for consonents 1 point',
+    scoringFunction:vowelBonusScore
+  },
+  {
+    name:'scrabble',
+    description:'for vowels 3 points,for consonents 1 point',
+    scoringFunction:scrabbleScore
+  }
+];
 
-function transform() {};
+
+function scorerPrompt() {
+  console.log("Which Scoring Algorithm do u need?");
+  for(let i=0;i<scoringAlgorithms.length;i++){
+    let option=scoringAlgorithms[i];
+   // console.log("*******");
+    console.log(i+"-"+option.name+option.description);
+  }
+  let que=input.question("Enter 0,1 or 2?");
+  return scoringAlgorithms[que];
+}
+function transform(oldstructure) {
+  const swapVal={};
+  for(let score in oldstructure){
+    let val=oldstructure[score];
+    //console.log(val);
+    for(let i=0;i<val.length;i++){
+      val1=val[i].toLowerCase();
+      console.log(val1);
+      swapVal[val1]=Number(score);
+    }
+  }
+  return swapVal;
+};
+//console.log(transform(oldPointStructure));
 
 let newPointStructure;
-
+newPointStructure=transform(oldPointStructure);
+//console.log(scrabbleScore('Sindhu'));
+console.log(newPointStructure);
 function runProgram() {
-   initialPrompt();
-   
+   let word=initialPrompt();
+   let selectedScore=scorerPrompt();
+   let scoreFinal=selectedScore.scoringFunction(word);
+   //typeof(selectedScore.scorerFunction(word));
+   //console.log(selectedScore.scoringFunction(word));
+   console.log(`score for ${word} is ${scoreFinal}`);
 }
 
 // Don't write any code below this line //
